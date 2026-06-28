@@ -3,6 +3,7 @@
 #include <mavsdk/plugins/mavlink_passthrough/mavlink_passthrough.h>
 #include <iostream>
 #include <chrono>
+#include <numbers>
 #include <thread>
 #include <cmath>
 
@@ -23,10 +24,10 @@ constexpr double DROP_RADIUS_METERS = 3.0;
 // Fonction Haversine pour calculer la distance entre deux points GPS
 double calculate_distance(double lat1, double lon1, double lat2, double lon2) {
     constexpr double R = 6371000.0; // Rayon de la Terre en mètres
-    double dLat = (lat2 - lat1) * M_PI / 180.0;
-    double dLon = (lon2 - lon1) * M_PI / 180.0;
+    double dLat = (lat2 - lat1) * std::numbers::pi / 180.0;
+    double dLon = (lon2 - lon1) * std::numbers::pi / 180.0;
     double a = std::sin(dLat/2) * std::sin(dLat/2) +
-               std::cos(lat1 * M_PI / 180.0) * std::cos(lat2 * M_PI / 180.0) *
+               std::cos(lat1 * std::numbers::pi / 180.0) * std::cos(lat2 * std::numbers::pi / 180.0) *
                std::sin(dLon/2) * std::sin(dLon/2);
     double c = 2 * std::atan2(std::sqrt(a), std::sqrt(1-a));
     return R * c;
